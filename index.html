@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Power Query | תרגול חגי תשרי</title>
+
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  font-family:Arial,"Noto Sans Hebrew",sans-serif;
+  background:#f4f7fb;
+  color:#263547;
+  line-height:1.7;
+}
+
+.page{
+  min-height:100vh;
+  background:#f4f7fb;
+  padding-bottom:60px;
+}
+
+.hero{
+  padding:50px 24px 36px;
+  text-align:center;
+  color:#24364b;
+  background:linear-gradient(180deg,#eaf2ff 0%,#f4f7fb 100%);
+  border-bottom:1px solid #d9e4f1;
+}
+
+.kicker{
+  font-size:.9rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#3578c8;
+  font-weight:700;
+}
+
+h1{
+  margin:8px 0 4px;
+  font-size:clamp(2.2rem,5vw,4.2rem);
+  line-height:1.05;
+  font-weight:800;
+  color:#20344e;
+}
+
+.rule{
+  width:min(580px,80%);
+  height:4px;
+  margin:22px auto 16px;
+  background:#4a90e2;
+  border-radius:999px;
+}
+
+.subtitle{
+  color:#52677f;
+  font-size:clamp(1rem,2vw,1.3rem);
+}
+
+.shell{
+  width:min(1160px,calc(100% - 32px));
+  margin:0 auto;
+}
+
+.overview,.panel,.finish{
+  background:#fff;
+  border-radius:20px;
+  box-shadow:0 8px 24px rgba(45,65,90,.09);
+  border-top:5px solid #4a90e2;
+}
+
+.overview{
+  padding:25px 28px;
+  margin:26px 0 18px;
+}
+
+.overview h2{margin:0 0 6px;color:#263b52}
+
+.overview-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:16px;
+}
+
+.overview-item{
+  background:#f7f9fc;
+  border:1px solid #e0e7ef;
+  border-radius:12px;
+  padding:12px 14px;
+}
+
+.download-row{
+  margin-top:18px;
+  text-align:center;
+}
+
+.download-btn{
+  display:inline-block;
+  background:#345b82;
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+  border-radius:10px;
+  padding:11px 18px;
+  box-shadow:0 4px 12px rgba(52,91,130,.18);
+}
+
+.download-btn:hover{background:#294c6d}
+
+.selfcheck-info{
+  margin-top:16px;
+  background:#edf8f2;
+  border-right:4px solid #3b9466;
+  border-radius:10px;
+  padding:12px 14px;
+  color:#345746;
+}
+
+.nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:0 0 18px;
+  justify-content:center;
+}
+
+.nav a{
+  color:#315f91;
+  text-decoration:none;
+  border:1px solid #cad8e8;
+  background:#fff;
+  border-radius:999px;
+  padding:7px 12px;
+  font-size:.92rem;
+}
+
+.nav a:hover{background:#eaf2ff}
+
+.panel{
+  margin:18px 0;
+  padding:30px 34px;
+}
+
+.panel-title{
+  border-bottom:1px solid #e5eaf0;
+  padding-bottom:16px;
+  margin-bottom:8px;
+}
+
+.panel-title h2{
+  margin:0;
+  font-size:1.9rem;
+  line-height:1.25;
+  color:#25384f;
+}
+
+.task{
+  display:grid;
+  grid-template-columns:1fr 48px;
+  gap:18px;
+  padding:22px 0;
+  border-bottom:1px solid #edf0f4;
+}
+
+.task:last-child{border-bottom:none}
+
+.task-num{
+  background:#345b82;
+  color:#fff;
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border-radius:8px;
+  font-weight:800;
+  font-size:1.05rem;
+  margin-top:3px;
+}
+
+.task h3{
+  margin:0 0 7px;
+  color:#bd533f;
+  font-size:1.22rem;
+}
+
+.task p{margin:.35rem 0}
+
+.path{
+  display:inline-block;
+  direction:ltr;
+  text-align:left;
+  margin:7px 0;
+  padding:5px 9px;
+  background:#eef3f8;
+  border:1px solid #d7e0ea;
+  border-radius:7px;
+  color:#334b65;
+  font-family:Consolas,monospace;
+  font-size:.9rem;
+}
+
+.question{
+  margin-top:14px;
+  padding:14px 15px;
+  background:#edf8f2;
+  border-right:4px solid #3b9466;
+  border-radius:10px;
+}
+
+.question-title{
+  color:#27734d;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.answer-row{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.answer-row input,
+.answer-row select{
+  font:inherit;
+  min-width:190px;
+  max-width:100%;
+  padding:8px 10px;
+  border:1px solid #b9c8d6;
+  border-radius:8px;
+  background:#fff;
+  color:#263547;
+}
+
+.answer-row input[type="number"]{
+  direction:ltr;
+  text-align:left;
+}
+
+.checkbox-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 18px;
+  margin-top:9px;
+}
+
+.checkbox-row label{
+  background:#fff;
+  border:1px solid #cfe4d7;
+  border-radius:8px;
+  padding:6px 10px;
+  cursor:pointer;
+}
+
+.check-btn{
+  font:inherit;
+  font-weight:700;
+  border:0;
+  border-radius:8px;
+  padding:8px 14px;
+  cursor:pointer;
+  background:#347a57;
+  color:#fff;
+}
+
+.check-btn:hover{background:#2d6c4c}
+
+.feedback{
+  margin-top:9px;
+  font-weight:700;
+  min-height:1.4em;
+}
+
+.feedback.ok{color:#287447}
+.feedback.no{color:#ad4539}
+.feedback.hint{color:#8b641d}
+
+.tip{
+  margin-top:12px;
+  padding:11px 13px;
+  background:#fff8e8;
+  border-right:4px solid #e1ad45;
+  border-radius:9px;
+}
+
+.note{
+  margin-top:12px;
+  padding:11px 13px;
+  background:#eef5ff;
+  border-right:4px solid #5b91cf;
+  border-radius:9px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:12px 0;
+  background:#fff;
+}
+
+th,td{
+  border:1px solid #dfe5ec;
+  padding:9px 10px;
+  text-align:right;
+}
+
+th{
+  background:#eef3f8;
+  color:#31465d;
+}
+
+ul{
+  margin:.45rem 0;
+  padding-right:1.4rem;
+}
+
+.finish{
+  padding:28px 34px;
+  margin-top:18px;
+  border-top-color:#3b9466;
+}
+
+.finish h2{
+  margin-top:0;
+  color:#263b52;
+}
+
+.footer{
+  color:#7b8795;
+  text-align:center;
+  font-size:.88rem;
+  padding-top:24px;
+}
+
+@media(max-width:760px){
+  .overview-grid{grid-template-columns:1fr}
+  .panel{padding:24px 18px}
+  .task{grid-template-columns:1fr 42px;gap:10px}
+  .panel-title h2{font-size:1.45rem}
+  .hero{padding-top:38px}
+  .answer-row{align-items:stretch}
+  .answer-row input,.answer-row select,.check-btn{width:100%}
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<header class="hero">
+  <div class="kicker">POWER BI · POWER QUERY</div>
+  <h1>תרגול חגי תשרי</h1>
+  <div class="rule"></div>
+  <div class="subtitle">תרגול בסיסי נוסף | איכות נתונים · טקסט · תאריך · חישובים</div>
+</header>
+
+<main class="shell">
+
+<section class="overview">
+  <h2>לפני שמתחילים</h2>
+  <p>
+    בתרגיל תעבדו עם נתוני הזמנות של מארזי חג. תכירו את הנתונים באמצעות ה־Meta Data,
+    תבדקו את איכותם, תבצעו ניקוי וטיוב ותיצרו מידע חדש באמצעות Power Query.
+  </p>
+
+  <div class="overview-grid">
+    <div class="overview-item"><b>קובץ:</b><br>holiday.xlsx</div>
+    <div class="overview-item"><b>גיליון לטעינה:</b><br>Orders</div>
+    <div class="overview-item"><b>גיליון לעיון:</b><br>Meta Data</div>
+  </div>
+
+  <div class="download-row">
+    <a class="download-btn" href="holiday.xlsx" download>הורדת קובץ הנתונים</a>
+  </div>
+
+  <div class="selfcheck-info">
+    <b>בדיקה עצמית:</b> בשאלות המסומנות בירוק הזינו או בחרו תשובה ולחצו "בדיקה".
+    התשובות אינן נשמרות ואינן נשלחות.
+  </div>
+</section>
+
+<nav class="nav">
+  <a href="#a">היכרות וטעינה</a>
+  <a href="#b">איכות נתונים</a>
+  <a href="#c">ניקוי</a>
+  <a href="#d">טקסט</a>
+  <a href="#e">תאריך</a>
+  <a href="#f">חישובים</a>
+  <a href="#g">Conditional Column</a>
+  <a href="#h">Applied Steps</a>
+</nav>
+
+<section class="panel" id="a">
+  <div class="panel-title"><h2>חלק א · היכרות עם הנתונים וטעינה</h2></div>
+
+  <div class="task">
+    <div>
+      <h3>הכירו את הקובץ</h3>
+      <p>פתחו את <b>holiday.xlsx</b> ועברו תחילה על גיליון <b>Meta Data</b>.</p>
+      <p>בדקו מה משמעות כל עמודה, מהו סוג הנתון הצפוי ואילו ערכים נחשבים תקינים.</p>
+
+      <div class="question">
+        <div class="question-title">שאלה 1 · מה מייצגת כל שורה בטבלת Orders?</div>
+        <div class="answer-row">
+          <select id="q1">
+            <option value="">בחרו תשובה</option>
+            <option value="a">לקוח אחד</option>
+            <option value="b">הזמנה אחת של מארז חג</option>
+            <option value="c">מוצר אחד</option>
+            <option value="d">חג אחד</option>
+          </select>
+          <button class="check-btn" onclick="checkChoice('q1','fb1','b','היעזרו בחלק \"על מערך הנתונים\" בגיליון Meta Data.')">בדיקה</button>
+        </div>
+        <div id="fb1" class="feedback"></div>
+      </div>
+    </div>
+    <div class="task-num">1</div>
+  </div>
+
+  <div class="task">
+    <div>
+      <h3>טעינת הנתונים</h3>
+      <p>פתחו Power BI וטענו את גיליון <b>Orders</b> בלבד.</p>
+      <div class="path">Home → Get data → Excel workbook → Transform data</div>
+      <p>השוו את סוגי הנתונים ב־Power Query לסוגים המוגדרים ב־Meta Data ותקנו במידת הצורך.</p>
+    </div>
+    <div class="task-num">2</div>
+  </div>
+</section>
+
+<section class="panel" id="b">
+  <div class="panel-title"><h2>חלק ב · בדיקת איכות הנתונים</h2></div>
+
+  <div class="tip">
+    <b>שימו לב:</b> ודאו שכלי ה־Data Profiling מבוססים על <b>Entire data set</b>
+    ולא רק על 1,000 השורות הראשונות.
+  </div>
+
+  <div class="note">
+    <b>תזכורת:</b> אם סיננתם נתונים רק לצורך בדיקה, הסינון נוסף כצעד ב־
+    <b>Applied Steps</b>. בסיום הבדיקה מחקו את צעד הסינון אם אינכם רוצים להשאיר אותו.
+  </div>
+
+  <div class="task">
+    <div>
+      <h3>Column Quality / Distribution / Profile</h3>
+      <div class="path">View → Column quality / Column distribution / Column profile</div>
+      <p>בדקו באילו עמודות קיימים ערכים ריקים ומה משמעותם.</p>
+
+      <div class="question">
+        <div class="question-title">שאלה 2 · באילו עמודות קיימים ערכים ריקים?</div>
+        <div class="checkbox-row">
+          <label><input type="checkbox" name="q2" value="Region"> Region</label>
+          <label><input type="checkbox" name="q2" value="GiftMessage"> GiftMessage</label>
+          <label><input type="checkbox" name="q2" value="City"> City</label>
+          <label><input type="checkbox" name="q2" value="Discount"> Discount</label>
+          <label><input type="checkbox" name="q2" value="SalesChannel"> SalesChannel</label>
+        </div>
+        <div class="answer-row">
+          <button class="check-btn" onclick="checkQ2()">בדיקה</button>
+        </div>
+        <div id="fb2" class="feedback"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">שאלה 3 · האם כל ערך ריק שמצאתם דורש תיקון?</div>
+        <div class="answer-row">
+          <select id="q3">
+            <option value="">בחרו תשובה</option>
+            <option value="a">כן, כל Empty הוא תמיד שגיאת איכות</option>
+            <option value="b">לא. GiftMessage הוא שדה אופציונלי ולכן ערך ריק בו יכול להיות תקין</option>
+            <option value="c">לא. Region הוא שדה אופציונלי ולכן אין צורך לטפל בו</option>
+          </select>
+          <button class="check-btn" onclick="checkChoice('q3','fb3','b','בדקו ב־Meta Data אילו שדות מוגדרים כאופציונליים.')">בדיקה</button>
+        </div>
+        <div id="fb3" class="feedback"></div>
+      </div>
+    </div>
+    <div class="task-num">3</div>
+  </div>
+</section>
+
+<section class="panel" id="c">
+  <div class="panel-title"><h2>חלק ג · ניקוי וטיוב נתונים</h2></div>
+
+  <div class="task">
+    <div>
+      <h3>תיקון ערכי טקסט</h3>
+      <p>בדקו את הערכים בעמודות <b>Holiday</b> ו־<b>SalesChannel</b>.</p>
+
+      <div class="question">
+        <div class="question-title">שאלה 4 · איזה ערך בעמודת Holiday אינו תקין?</div>
+        <div class="answer-row">
+          <input id="q4" type="text" placeholder="הערך כפי שהוא מופיע">
+          <button class="check-btn" onclick="checkText('q4','fb4',['ראש השנהה'],'בדקו את הערכים הייחודיים בעמודת Holiday.')">בדיקה</button>
+        </div>
+        <div id="fb4" class="feedback"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">שאלה 5 · איזה ערך בעמודת SalesChannel אינו תקין?</div>
+        <div class="answer-row">
+          <input id="q5" type="text" placeholder="הערך כפי שהוא מופיע">
+          <button class="check-btn" onclick="checkText('q5','fb5',['אתרר'],'בדקו את הערכים הייחודיים בעמודת SalesChannel.')">בדיקה</button>
+        </div>
+        <div id="fb5" class="feedback"></div>
+      </div>
+
+      <p>תקנו את שני הערכים באמצעות:</p>
+      <div class="path">Transform → Replace Values</div>
+    </div>
+    <div class="task-num">4</div>
+  </div>
+
+  <div class="task">
+    <div>
+      <h3>טיפול בערך החסר</h3>
+      <p>בעמודת <b>Region</b> קיים ערך חסר. החליפו אותו בערך <b>לא ידוע</b>.</p>
+      <div class="path">Transform → Replace Values</div>
+      <p>אין צורך למלא את GiftMessage — לפי ה־Meta Data זהו שדה אופציונלי.</p>
+    </div>
+    <div class="task-num">5</div>
+  </div>
+
+  <div class="task">
+    <div>
+      <h3>בדיקת ערכים מספריים</h3>
+      <p>היעזרו ב־Meta Data כדי לבדוק את <b>Quantity</b> ואת <b>Discount</b>.</p>
+
+      <div class="question">
+        <div class="question-title">שאלה 6 · מהו ערך Quantity שאינו תקין?</div>
+        <div class="answer-row">
+          <input id="q6" type="number" placeholder="ערך">
+          <button class="check-btn" onclick="checkNumber('q6','fb6',0,0,'Quantity חייב להיות מספר חיובי גדול מ־0.')">בדיקה</button>
+        </div>
+        <div id="fb6" class="feedback"></div>
+      </div>
+
+      <p>החליפו את הערך <b>0</b> ב־<b>1</b>.</p>
+
+      <div class="question">
+        <div class="question-title">שאלה 7 · מהו ערך Discount שאינו תקין?</div>
+        <div class="answer-row">
+          <select id="q7">
+            <option value="">בחרו תשובה</option>
+            <option value="0.2">20%</option>
+            <option value="0.5">50%</option>
+            <option value="1.2">120%</option>
+            <option value="2">200%</option>
+          </select>
+          <button class="check-btn" onclick="checkChoice('q7','fb7','1.2','לפי ה־Meta Data ההנחה התקינה היא עד 20%.')">בדיקה</button>
+        </div>
+        <div id="fb7" class="feedback"></div>
+      </div>
+
+      <p>החליפו את <b>120%</b> ב־<b>20%</b>.</p>
+    </div>
+    <div class="task-num">6</div>
+  </div>
+</section>
+
+<section class="panel" id="d">
+  <div class="panel-title"><h2>חלק ד · פעולות על טקסט</h2></div>
+
+  <div class="task">
+    <div>
+      <h3>ניקוי רווחים מיותרים</h3>
+      <p>בעמודת <b>City</b> יש כמה ערכים עם רווחים מיותרים בתחילת או בסוף הטקסט.</p>
+      <p>לפני הניקוי, בדקו ב־Column Distribution כמה ערכים שונים קיימים בעמודה.</p>
+      <div class="path">Transform → Format → Trim</div>
+      <p>לאחר ביצוע Trim בדקו שוב.</p>
+
+      <div class="question">
+        <div class="question-title">שאלה 8 · כמה ערכי City שונים היו לפני Trim וכמה נשארו לאחריו?</div>
+        <div class="answer-row">
+          <input id="q8a" type="number" placeholder="לפני Trim">
+          <input id="q8b" type="number" placeholder="אחרי Trim">
+          <button class="check-btn" onclick="checkQ8()">בדיקה</button>
+        </div>
+        <div id="fb8" class="feedback"></div>
+      </div>
+    </div>
+    <div class="task-num">7</div>
+  </div>
+</section>
+
+<section class="panel" id="e">
+  <div class="panel-title"><h2>חלק ה · עבודה עם תאריכים</h2></div>
+
+  <div class="task">
+    <div>
+      <h3>יצירת מידע מתוך OrderDate</h3>
+      <p>צרו מתוך <b>OrderDate</b> שלוש עמודות חדשות:</p>
+      <ul>
+        <li>חודש</li>
+        <li>יום בחודש</li>
+        <li>שם יום בשבוע</li>
+      </ul>
+      <div class="path">Add Column → Date</div>
+
+      <div class="question">
+        <div class="question-title">שאלה 9 · מדוע משתמשים כאן ב־Add Column ולא ב־Transform?</div>
+        <div class="answer-row">
+          <select id="q9">
+            <option value="">בחרו תשובה</option>
+            <option value="a">כדי לשמור את OrderDate המקורית וליצור ממנה עמודות חדשות</option>
+            <option value="b">כי Transform אינו עובד על תאריכים</option>
+            <option value="c">כי Add Column משנה את OrderDate עצמה</option>
+          </select>
+          <button class="check-btn" onclick="checkChoice('q9','fb9','a','חשבו האם אתם רוצים לשנות את העמודה המקורית או להשאיר אותה.')">בדיקה</button>
+        </div>
+        <div id="fb9" class="feedback"></div>
+      </div>
+    </div>
+    <div class="task-num">8</div>
+  </div>
+</section>
+
+<section class="panel" id="f">
+  <div class="panel-title"><h2>חלק ו · חישובים ועמודות חדשות</h2></div>
+
+  <div class="task">
+    <div>
+      <h3>GrossSales ו־NetSales</h3>
+      <p>צרו שתי עמודות חדשות:</p>
+      <div class="path">GrossSales = Quantity * UnitPrice</div><br>
+      <div class="path">NetSales = GrossSales * (1 - Discount)</div>
+      <p>הגדירו להן סוג נתון מספרי מתאים.</p>
+
+      <div class="question">
+        <div class="question-title">שאלה 10 · מה ההבדל בין GrossSales ל־NetSales?</div>
+        <div class="answer-row">
+          <select id="q10">
+            <option value="">בחרו תשובה</option>
+            <option value="a">GrossSales הוא סכום ההזמנה לפני הנחה; NetSales לאחר הנחה</option>
+            <option value="b">GrossSales הוא מחיר יחידה; NetSales הוא מספר היחידות</option>
+            <option value="c">GrossSales כולל משלוח ו־NetSales לא</option>
+            <option value="d">אין הבדל ביניהם</option>
+          </select>
+          <button class="check-btn" onclick="checkChoice('q10','fb10','a','בדקו באיזה מהחישובים מופיעה עמודת Discount.')">בדיקה</button>
+        </div>
+        <div id="fb10" class="feedback"></div>
+      </div>
+
+      <div class="question">
+        <div class="question-title">שאלה 11 · מהו הערך המקסימלי בעמודת NetSales?</div>
+        <div class="answer-row">
+          <input id="q11" type="number" step="any" placeholder="הזינו סכום">
+          <button class="check-btn" onclick="checkNumber('q11','fb11',17829.6,0.5,'היעזרו ב־Column Profile לאחר שביצעתם את תיקוני Quantity ו־Discount.')">בדיקה</button>
+        </div>
+        <div id="fb11" class="feedback"></div>
+      </div>
+    </div>
+    <div class="task-num">9</div>
+  </div>
+</section>
+
+<section class="panel" id="g">
+  <div class="panel-title"><h2>חלק ז · Conditional Column</h2></div>
+
+  <div class="task">
+    <div>
+      <h3>סיווג גודל ההזמנה</h3>
+      <p>צרו עמודה חדשה בשם <b>OrderSize</b> לפי NetSales:</p>
+
+      <table>
+        <thead><tr><th>NetSales</th><th>OrderSize</th></tr></thead>
+        <tbody>
+          <tr><td>עד 500 כולל</td><td>קטנה</td></tr>
+          <tr><td>מעל 500 ועד 2,000 כולל</td><td>בינונית</td></tr>
+          <tr><td>מעל 2,000</td><td>גדולה</td></tr>
+        </tbody>
+      </table>
+
+      <div class="path">Add Column → Conditional Column</div>
+
+      <div class="question">
+        <div class="question-title">שאלה 12 · כמה הזמנות מסווגות כ־"גדולה"?</div>
+        <div class="answer-row">
+          <input id="q12" type="number" placeholder="מספר הזמנות">
+          <button class="check-btn" onclick="checkNumber('q12','fb12',254,0,'בדקו את מספר הרשומות שבהן OrderSize הוא גדולה.')">בדיקה</button>
+        </div>
+        <div id="fb12" class="feedback"></div>
+      </div>
+    </div>
+    <div class="task-num">10</div>
+  </div>
+
+  <div class="task">
+    <div>
+      <h3>שילוב טקסט</h3>
+      <p>צרו עמודה חדשה שמחברת את <b>Holiday</b> ואת <b>Product</b>, וביניהם המקף " - ".</p>
+      <p>לדוגמה:</p>
+      <div class="path">ראש השנה - מארז דבש ורימון</div>
+      <p>תנו לעמודה שם ברור לבחירתכם.</p>
+    </div>
+    <div class="task-num">11</div>
+  </div>
+</section>
+
+<section class="panel" id="h">
+  <div class="panel-title"><h2>חלק ח · Applied Steps והבנת התהליך</h2></div>
+
+  <div class="task">
+    <div>
+      <h3>מחיקת צעד יחיד</h3>
+      <p>הפכו זמנית את <b>CustomerType</b> לאותיות גדולות, אתרו את הצעד החדש ב־Applied Steps ואז מחקו רק אותו.</p>
+      <div class="path">Transform → Format → UPPERCASE</div>
+
+      <div class="question">
+        <div class="question-title">שאלה 13 · מה קרה לשלבים שבוצעו לפני הצעד שמחקתם?</div>
+        <div class="answer-row">
+          <select id="q13">
+            <option value="">בחרו תשובה</option>
+            <option value="a">גם הם נמחקו</option>
+            <option value="b">הם נשארו ללא שינוי</option>
+            <option value="c">כולם בוצעו מחדש בסדר הפוך</option>
+          </select>
+          <button class="check-btn" onclick="checkChoice('q13','fb13','b','הסתכלו ברשימת Applied Steps לאחר מחיקת הצעד.')">בדיקה</button>
+        </div>
+        <div id="fb13" class="feedback"></div>
+      </div>
+    </div>
+    <div class="task-num">12</div>
+  </div>
+
+  <div class="task">
+    <div>
+      <h3>Refresh</h3>
+      <div class="question">
+        <div class="question-title">שאלה 14 · אם holiday.xlsx יוחלף בקובץ חדש בעל אותו מבנה ונבצע Refresh, האם צריך לבצע שוב ידנית את פעולות הניקוי והחישוב?</div>
+        <div class="answer-row">
+          <select id="q14">
+            <option value="">בחרו תשובה</option>
+            <option value="yes">כן, צריך לבצע את כל השלבים מחדש</option>
+            <option value="no">לא, Power Query מפעיל מחדש את Applied Steps על הנתונים החדשים</option>
+          </select>
+          <button class="check-btn" onclick="checkChoice('q14','fb14','no','חשבו מה נשמר ב־Applied Steps.')">בדיקה</button>
+        </div>
+        <div id="fb14" class="feedback"></div>
+      </div>
+    </div>
+    <div class="task-num">13</div>
+  </div>
+</section>
+
+<section class="finish">
+  <h2>סיום ושמירה</h2>
+  <p>ודאו שכל פעולות הניקוי והעמודות החדשות קיימות ושאין שגיאות ב־Applied Steps.</p>
+  <div class="path">Home → Close &amp; Apply</div>
+  <p>שמרו את קובץ ה־PBIX בהתאם להנחיות ההגשה.</p>
+</section>
+
+<div class="footer">Power Query · תרגול חגי תשרי · תרגול בסיסי</div>
+
+</main>
+</div>
+
+<script>
+const attempts = {};
+
+function setFeedback(id,type,text){
+  const el=document.getElementById(id);
+  el.className='feedback '+type;
+  el.textContent=text;
+}
+
+function wrongWithHint(fb,key,hint){
+  attempts[key]=(attempts[key]||0)+1;
+  if(attempts[key]===1){
+    setFeedback(fb,'no','עדיין לא. נסו שוב.');
+  }else{
+    setFeedback(fb,'hint','לא בדיוק. רמז: '+hint);
+  }
+}
+
+function normalizeText(v){
+  return v.trim().toLowerCase().replace(/\s+/g,'');
+}
+
+function checkText(inputId,fbId,answers,hint){
+  const raw=document.getElementById(inputId).value;
+  if(!raw.trim()){
+    setFeedback(fbId,'hint','הזינו תשובה לפני הבדיקה.');
+    return;
+  }
+  const v=normalizeText(raw);
+  if(answers.map(normalizeText).includes(v)){
+    setFeedback(fbId,'ok','✓ נכון!');
+  }else{
+    wrongWithHint(fbId,inputId,hint);
+  }
+}
+
+function checkChoice(inputId,fbId,answer,hint){
+  const v=document.getElementById(inputId).value;
+  if(!v){
+    setFeedback(fbId,'hint','בחרו תשובה לפני הבדיקה.');
+    return;
+  }
+  if(v===answer){
+    setFeedback(fbId,'ok','✓ נכון!');
+  }else{
+    wrongWithHint(fbId,inputId,hint);
+  }
+}
+
+function checkNumber(inputId,fbId,answer,tolerance,hint){
+  const raw=document.getElementById(inputId).value;
+  if(raw===''){
+    setFeedback(fbId,'hint','הזינו תשובה לפני הבדיקה.');
+    return;
+  }
+  const value=Number(raw);
+  if(Math.abs(value-answer)<=tolerance){
+    setFeedback(fbId,'ok','✓ נכון!');
+  }else{
+    wrongWithHint(fbId,inputId,hint);
+  }
+}
+
+function checkQ2(){
+  const checked=[...document.querySelectorAll('input[name="q2"]:checked')].map(x=>x.value).sort();
+  const correct=['GiftMessage','Region'].sort();
+  if(checked.length===0){
+    setFeedback('fb2','hint','בחרו לפחות עמודה אחת.');
+    return;
+  }
+  const ok=checked.length===correct.length && checked.every((v,i)=>v===correct[i]);
+  if(ok){
+    setFeedback('fb2','ok','✓ נכון!');
+  }else{
+    wrongWithHint('fb2','q2','Column Quality מציג Empty בשתי עמודות. אחת מהן היא שדה אופציונלי.');
+  }
+}
+
+function checkQ8(){
+  const a=document.getElementById('q8a').value;
+  const b=document.getElementById('q8b').value;
+  if(a===''||b===''){
+    setFeedback('fb8','hint','מלאו את שני השדות.');
+    return;
+  }
+  if(Number(a)===17 && Number(b)===14){
+    setFeedback('fb8','ok','✓ נכון!');
+  }else{
+    wrongWithHint('fb8','q8','רווח בתחילת או בסוף מחרוזת גורם ל־Power Query להתייחס אליה כערך שונה.');
+  }
+}
+</script>
+
+</body>
+</html>
