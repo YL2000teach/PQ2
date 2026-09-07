@@ -346,6 +346,73 @@ ul{
   .answer-row{align-items:stretch}
   .answer-row input,.answer-row select,.check-btn{width:100%}
 }
+
+/* מסלולי עבודה מקבילים: Power BI באנגלית / Excel בעברית */
+.path-pair{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:stretch;
+  margin:9px 0;
+}
+
+.platform-path{
+  flex:1 1 330px;
+  background:#f8fafc;
+  border:1px solid #d7e0ea;
+  border-radius:10px;
+  padding:9px 11px;
+}
+
+.platform-label{
+  display:inline-block;
+  font-size:.78rem;
+  font-weight:800;
+  border-radius:999px;
+  padding:3px 8px;
+  margin-bottom:5px;
+}
+
+.platform-label.pbi{
+  background:#e8f1fd;
+  color:#285f9e;
+}
+
+.platform-label.excel{
+  background:#e9f7ef;
+  color:#257044;
+}
+
+.route{
+  font-family:Consolas,Arial,sans-serif;
+  font-size:.9rem;
+  color:#334b65;
+}
+
+.route.ltr{
+  direction:ltr;
+  text-align:left;
+}
+
+.route.rtl{
+  direction:rtl;
+  text-align:right;
+}
+
+.formula{
+  display:inline-block;
+  direction:ltr;
+  text-align:left;
+  margin:7px 0;
+  padding:5px 9px;
+  background:#eef3f8;
+  border:1px solid #d7e0ea;
+  border-radius:7px;
+  color:#334b65;
+  font-family:Consolas,monospace;
+  font-size:.9rem;
+}
+
 </style>
 </head>
 
@@ -370,8 +437,8 @@ ul{
 
   <div class="overview-grid">
     <div class="overview-item"><b>קובץ:</b><br>holiday.xlsx</div>
-    <div class="overview-item"><b>גיליון לטעינה:</b><br>Orders</div>
-    <div class="overview-item"><b>גיליון לעיון:</b><br>Meta Data</div>
+    <div class="overview-item"><b>גיליונות לטעינה:</b><br>Orders + Meta Data</div>
+    <div class="overview-item"><b>אפשר לעבוד ב:</b><br>Power BI או Excel</div>
   </div>
 
   <div class="download-row">
@@ -396,13 +463,37 @@ ul{
 </nav>
 
 <section class="panel" id="a">
-  <div class="panel-title"><h2>חלק א · היכרות עם הנתונים וטעינה</h2></div>
+  <div class="panel-title"><h2>חלק א · טעינה והיכרות עם הנתונים</h2></div>
 
   <div class="task">
     <div>
-      <h3>הכירו את הקובץ</h3>
-      <p>פתחו את <b>holiday.xlsx</b> ועברו תחילה על גיליון <b>Meta Data</b>.</p>
-      <p>בדקו מה משמעות כל עמודה, מהו סוג הנתון הצפוי ואילו ערכים נחשבים תקינים.</p>
+      <h3>טעינת שני הגיליונות</h3>
+      <p>טענו את הקובץ <b>holiday.xlsx</b> ל־Power Query. בחלון הניווט סמנו את <b>שני הגיליונות</b>: <b>Orders</b> ו־<b>Meta Data</b>, כדי שה־Meta Data יהיה זמין לעיון לאורך כל התרגיל.</p>
+
+      <div class="path-pair">
+        <div class="platform-path">
+          <span class="platform-label pbi">Power BI · English</span>
+          <div class="route ltr">Home → Get data → Excel workbook → holiday.xlsx</div>
+          <div class="route ltr">Navigator → Orders + Meta Data → Transform Data</div>
+        </div>
+        <div class="platform-path">
+          <span class="platform-label excel">Excel · עברית</span>
+          <div class="route rtl">פתחו חוברת עבודה ריקה</div>
+          <div class="route rtl">נתונים → קבל נתונים → מקובץ → מחוברת עבודה של Excel → holiday.xlsx</div>
+          <div class="route rtl">ניווט → בחר פריטים מרובים → Orders + Meta Data → שינוי נתונים</div>
+        </div>
+      </div>
+
+      <div class="note"><b>חשוב:</b> במהלך העבודה בצעו את פעולות הניקוי והשינויים על השאילתה <b>Orders</b>. השאילתה <b>Meta Data</b> מיועדת לעיון ולהשוואה בלבד.</div>
+    </div>
+    <div class="task-num">1</div>
+  </div>
+
+  <div class="task">
+    <div>
+      <h3>היכרות עם ה־Meta Data ובדיקת סוגי הנתונים</h3>
+      <p>עברו לשאילתה <b>Meta Data</b> ובדקו מה משמעות כל עמודה, מהו סוג הנתון הצפוי ואילו ערכים נחשבים תקינים.</p>
+      <p>לאחר מכן חזרו ל־<b>Orders</b>, השוו את סוגי הנתונים ש־Power Query זיהה לסוגים המוגדרים ב־Meta Data ותקנו במידת הצורך.</p>
 
       <div class="question">
         <div class="question-title">שאלה 1 · מה מייצגת כל שורה בטבלת Orders?</div>
@@ -414,20 +505,10 @@ ul{
             <option value="c">מוצר אחד</option>
             <option value="d">חג אחד</option>
           </select>
-          <button class="check-btn" onclick="checkChoice('q1','fb1','b','היעזרו בחלק \"על מערך הנתונים\" בגיליון Meta Data.')">בדיקה</button>
+          <button class="check-btn" onclick="checkChoice('q1','fb1','b','היעזרו בחלק על מערך הנתונים בגיליון Meta Data.')">בדיקה</button>
         </div>
         <div id="fb1" class="feedback"></div>
       </div>
-    </div>
-    <div class="task-num">1</div>
-  </div>
-
-  <div class="task">
-    <div>
-      <h3>טעינת הנתונים</h3>
-      <p>פתחו Power BI וטענו את גיליון <b>Orders</b> בלבד.</p>
-      <div class="path">Home → Get data → Excel workbook → Transform data</div>
-      <p>השוו את סוגי הנתונים ב־Power Query לסוגים המוגדרים ב־Meta Data ותקנו במידת הצורך.</p>
     </div>
     <div class="task-num">2</div>
   </div>
@@ -449,7 +530,16 @@ ul{
   <div class="task">
     <div>
       <h3>Column Quality / Distribution / Profile</h3>
-      <div class="path">View → Column quality / Column distribution / Column profile</div>
+      <div class="path-pair">
+  <div class="platform-path">
+    <span class="platform-label pbi">Power BI · English</span>
+    <div class="route ltr">View → Column quality / Column distribution / Column profile</div>
+  </div>
+  <div class="platform-path">
+    <span class="platform-label excel">Excel · עברית</span>
+    <div class="route rtl">תצוגה → איכות עמודה / הפצת עמודות / פרופיל עמודה</div>
+  </div>
+</div>
       <p>בדקו באילו עמודות קיימים ערכים ריקים ומה משמעותם.</p>
 
       <div class="question">
@@ -512,7 +602,16 @@ ul{
       </div>
 
       <p>תקנו את שני הערכים באמצעות:</p>
-      <div class="path">Transform → Replace Values</div>
+      <div class="path-pair">
+  <div class="platform-path">
+    <span class="platform-label pbi">Power BI · English</span>
+    <div class="route ltr">Transform → Replace Values</div>
+  </div>
+  <div class="platform-path">
+    <span class="platform-label excel">Excel · עברית</span>
+    <div class="route rtl">שינוי צורה → החלף ערכים</div>
+  </div>
+</div>
     </div>
     <div class="task-num">4</div>
   </div>
@@ -521,7 +620,16 @@ ul{
     <div>
       <h3>טיפול בערך החסר</h3>
       <p>בעמודת <b>Region</b> קיים ערך חסר. החליפו אותו בערך <b>לא ידוע</b>.</p>
-      <div class="path">Transform → Replace Values</div>
+      <div class="path-pair">
+  <div class="platform-path">
+    <span class="platform-label pbi">Power BI · English</span>
+    <div class="route ltr">Transform → Replace Values</div>
+  </div>
+  <div class="platform-path">
+    <span class="platform-label excel">Excel · עברית</span>
+    <div class="route rtl">שינוי צורה → החלף ערכים</div>
+  </div>
+</div>
       <p>אין צורך למלא את GiftMessage — לפי ה־Meta Data זהו שדה אופציונלי.</p>
     </div>
     <div class="task-num">5</div>
@@ -572,7 +680,16 @@ ul{
       <h3>ניקוי רווחים מיותרים</h3>
       <p>בעמודת <b>City</b> יש כמה ערכים עם רווחים מיותרים בתחילת או בסוף הטקסט.</p>
       <p>לפני הניקוי, בדקו ב־Column Distribution כמה ערכים שונים קיימים בעמודה.</p>
-      <div class="path">Transform → Format → Trim</div>
+      <div class="path-pair">
+  <div class="platform-path">
+    <span class="platform-label pbi">Power BI · English</span>
+    <div class="route ltr">Transform → Format → Trim</div>
+  </div>
+  <div class="platform-path">
+    <span class="platform-label excel">Excel · עברית</span>
+    <div class="route rtl">שינוי צורה → עיצוב → חתוך</div>
+  </div>
+</div>
       <p>לאחר ביצוע Trim בדקו שוב.</p>
 
       <div class="question">
@@ -601,7 +718,16 @@ ul{
         <li>יום בחודש</li>
         <li>שם יום בשבוע</li>
       </ul>
-      <div class="path">Add Column → Date</div>
+      <div class="path-pair">
+  <div class="platform-path">
+    <span class="platform-label pbi">Power BI · English</span>
+    <div class="route ltr">Add Column → Date</div>
+  </div>
+  <div class="platform-path">
+    <span class="platform-label excel">Excel · עברית</span>
+    <div class="route rtl">הוסף עמודה → תאריך</div>
+  </div>
+</div>
 
       <div class="question">
         <div class="question-title">שאלה 9 · מדוע משתמשים כאן ב־Add Column ולא ב־Transform?</div>
@@ -627,9 +753,19 @@ ul{
   <div class="task">
     <div>
       <h3>GrossSales ו־NetSales</h3>
-      <p>צרו שתי עמודות חדשות:</p>
-      <div class="path">GrossSales = Quantity * UnitPrice</div><br>
-      <div class="path">NetSales = GrossSales * (1 - Discount)</div>
+      <p>צרו שתי עמודות חדשות באמצעות עמודה מותאמת אישית:</p>
+<div class="path-pair">
+  <div class="platform-path">
+    <span class="platform-label pbi">Power BI · English</span>
+    <div class="route ltr">Add Column → Custom Column</div>
+  </div>
+  <div class="platform-path">
+    <span class="platform-label excel">Excel · עברית</span>
+    <div class="route rtl">הוסף עמודה → עמודה מותאמת אישית</div>
+  </div>
+</div>
+      <div class="formula">GrossSales = Quantity * UnitPrice</div><br>
+      <div class="formula">NetSales = GrossSales * (1 - Discount)</div>
       <p>הגדירו להן סוג נתון מספרי מתאים.</p>
 
       <div class="question">
@@ -677,7 +813,16 @@ ul{
         </tbody>
       </table>
 
-      <div class="path">Add Column → Conditional Column</div>
+      <div class="path-pair">
+  <div class="platform-path">
+    <span class="platform-label pbi">Power BI · English</span>
+    <div class="route ltr">Add Column → Conditional Column</div>
+  </div>
+  <div class="platform-path">
+    <span class="platform-label excel">Excel · עברית</span>
+    <div class="route rtl">הוסף עמודה → עמודה מותנית</div>
+  </div>
+</div>
 
       <div class="question">
         <div class="question-title">שאלה 12 · כמה הזמנות מסווגות כ־"גדולה"?</div>
@@ -695,8 +840,19 @@ ul{
     <div>
       <h3>שילוב טקסט</h3>
       <p>צרו עמודה חדשה שמחברת את <b>Holiday</b> ואת <b>Product</b>, וביניהם המקף " - ".</p>
-      <p>לדוגמה:</p>
-      <div class="path">ראש השנה - מארז דבש ורימון</div>
+      <p>צרו את העמודה באמצעות עמודה מותאמת אישית:</p>
+<div class="path-pair">
+  <div class="platform-path">
+    <span class="platform-label pbi">Power BI · English</span>
+    <div class="route ltr">Add Column → Custom Column</div>
+  </div>
+  <div class="platform-path">
+    <span class="platform-label excel">Excel · עברית</span>
+    <div class="route rtl">הוסף עמודה → עמודה מותאמת אישית</div>
+  </div>
+</div>
+      <p>דוגמה לתוצאה:</p>
+      <div class="formula" dir="rtl">ראש השנה - מארז דבש ורימון</div>
       <p>תנו לעמודה שם ברור לבחירתכם.</p>
     </div>
     <div class="task-num">11</div>
@@ -710,7 +866,16 @@ ul{
     <div>
       <h3>מחיקת צעד יחיד</h3>
       <p>הפכו זמנית את <b>CustomerType</b> לאותיות גדולות, אתרו את הצעד החדש ב־Applied Steps ואז מחקו רק אותו.</p>
-      <div class="path">Transform → Format → UPPERCASE</div>
+      <div class="path-pair">
+  <div class="platform-path">
+    <span class="platform-label pbi">Power BI · English</span>
+    <div class="route ltr">Transform → Format → UPPERCASE</div>
+  </div>
+  <div class="platform-path">
+    <span class="platform-label excel">Excel · עברית</span>
+    <div class="route rtl">שינוי צורה → עיצוב → אותיות רישיות</div>
+  </div>
+</div>
 
       <div class="question">
         <div class="question-title">שאלה 13 · מה קרה לשלבים שבוצעו לפני הצעד שמחקתם?</div>
@@ -752,8 +917,17 @@ ul{
 <section class="finish">
   <h2>סיום ושמירה</h2>
   <p>ודאו שכל פעולות הניקוי והעמודות החדשות קיימות ושאין שגיאות ב־Applied Steps.</p>
-  <div class="path">Home → Close &amp; Apply</div>
-  <p>שמרו את קובץ ה־PBIX בהתאם להנחיות ההגשה.</p>
+  <div class="path-pair">
+  <div class="platform-path">
+    <span class="platform-label pbi">Power BI · English</span>
+    <div class="route ltr">Home → Close &amp; Apply</div>
+  </div>
+  <div class="platform-path">
+    <span class="platform-label excel">Excel · עברית</span>
+    <div class="route rtl">בית → סגור &amp; טען</div>
+  </div>
+</div>
+  <p>שמרו את הקובץ בהתאם לסביבת העבודה: <b>PBIX</b> ב־Power BI או חוברת <b>Excel</b> אם עבדתם ב־Excel.</p>
 </section>
 
 <div class="footer">Power Query · תרגול חגי תשרי · תרגול בסיסי</div>
