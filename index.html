@@ -449,6 +449,10 @@ ul{
     <b>בדיקה עצמית:</b> בשאלות המסומנות בירוק הזינו או בחרו תשובה ולחצו "בדיקה".
     התשובות אינן נשמרות ואינן נשלחות.
   </div>
+  <div class="note">
+    <b>מסלולי Excel:</b> שמות הפקודות בעברית נבדקו מול ממשק Power Query ב־Excel Microsoft 365
+    ומול תיעוד Microsoft. בגרסאות אחרות ייתכנו הבדלי ניסוח קטנים; הנתיב המקביל ב־Power BI מופיע לידו באנגלית.
+  </div>
 </section>
 
 <nav class="nav">
@@ -474,13 +478,13 @@ ul{
         <div class="platform-path">
           <span class="platform-label pbi">Power BI · English</span>
           <div class="route ltr">Home → Get data → Excel workbook → holiday.xlsx</div>
-          <div class="route ltr">Navigator → Orders + Meta Data → Transform Data</div>
+          <div class="route ltr">Navigator: Select multiple items → Orders + Meta Data → Transform Data</div>
         </div>
         <div class="platform-path">
           <span class="platform-label excel">Excel · עברית</span>
           <div class="route rtl">פתחו חוברת עבודה ריקה</div>
-          <div class="route rtl">נתונים → קבל נתונים → מקובץ → מחוברת עבודה של Excel → holiday.xlsx</div>
-          <div class="route rtl">ניווט → בחר פריטים מרובים → Orders + Meta Data → שינוי נתונים</div>
+          <div class="route rtl">נתונים ← קבל נתונים ← מקובץ ← מחוברת עבודה של Excel</div>
+          <div class="route rtl">בחלון "נווט": בחר פריטים מרובים ← Orders + Meta Data ← המר נתונים</div>
         </div>
       </div>
 
@@ -537,7 +541,7 @@ ul{
   </div>
   <div class="platform-path">
     <span class="platform-label excel">Excel · עברית</span>
-    <div class="route rtl">תצוגה → איכות עמודה / הפצת עמודות / פרופיל עמודה</div>
+    <div class="route rtl">תצוגה ← איכות עמודה / הפצת עמודות / פרופיל עמודה</div>
   </div>
 </div>
       <p>בדקו באילו עמודות קיימים ערכים ריקים ומה משמעותם.</p>
@@ -605,11 +609,11 @@ ul{
       <div class="path-pair">
   <div class="platform-path">
     <span class="platform-label pbi">Power BI · English</span>
-    <div class="route ltr">Transform → Replace Values</div>
+    <div class="route ltr">Home → Replace Values</div>
   </div>
   <div class="platform-path">
     <span class="platform-label excel">Excel · עברית</span>
-    <div class="route rtl">שינוי צורה → החלף ערכים</div>
+    <div class="route rtl">בית ← החלף ערכים</div>
   </div>
 </div>
     </div>
@@ -623,11 +627,11 @@ ul{
       <div class="path-pair">
   <div class="platform-path">
     <span class="platform-label pbi">Power BI · English</span>
-    <div class="route ltr">Transform → Replace Values</div>
+    <div class="route ltr">Home → Replace Values</div>
   </div>
   <div class="platform-path">
     <span class="platform-label excel">Excel · עברית</span>
-    <div class="route rtl">שינוי צורה → החלף ערכים</div>
+    <div class="route rtl">בית ← החלף ערכים</div>
   </div>
 </div>
       <p>אין צורך למלא את GiftMessage — לפי ה־Meta Data זהו שדה אופציונלי.</p>
@@ -687,10 +691,14 @@ ul{
   </div>
   <div class="platform-path">
     <span class="platform-label excel">Excel · עברית</span>
-    <div class="route rtl">שינוי צורה → עיצוב → חתוך</div>
+    <div class="route rtl">המר ← תבנית ← חתוך</div>
   </div>
 </div>
       <p>לאחר ביצוע Trim בדקו שוב.</p>
+      <div class="note"><b>Trim לעומת Clean:</b> בתפריט <b>תבנית</b> אלה שתי פעולות שונות:
+      <b>חתוך (Trim)</b> מסיר רווחים מיותרים מתחילת הטקסט ומסופו;
+      <b>נקה (Clean)</b> מסיר תווי בקרה/תווים שאינם ניתנים להדפסה.
+      במשימה זו השתמשו ב־<b>חתוך</b>.</div>
 
       <div class="question">
         <div class="question-title">שאלה 8 · כמה ערכי City שונים היו לפני Trim וכמה נשארו לאחריו?</div>
@@ -725,7 +733,7 @@ ul{
   </div>
   <div class="platform-path">
     <span class="platform-label excel">Excel · עברית</span>
-    <div class="route rtl">הוסף עמודה → תאריך</div>
+    <div class="route rtl">הוסף עמודה ← תאריך</div>
   </div>
 </div>
 
@@ -761,7 +769,7 @@ ul{
   </div>
   <div class="platform-path">
     <span class="platform-label excel">Excel · עברית</span>
-    <div class="route rtl">הוסף עמודה → עמודה מותאמת אישית</div>
+    <div class="route rtl">הוסף עמודה ← מותאמת אישית</div>
   </div>
 </div>
       <div class="formula">GrossSales = Quantity * UnitPrice</div><br>
@@ -820,7 +828,7 @@ ul{
   </div>
   <div class="platform-path">
     <span class="platform-label excel">Excel · עברית</span>
-    <div class="route rtl">הוסף עמודה → עמודה מותנית</div>
+    <div class="route rtl">הוסף עמודה ← עמודה מותנית</div>
   </div>
 </div>
 
@@ -848,7 +856,7 @@ ul{
   </div>
   <div class="platform-path">
     <span class="platform-label excel">Excel · עברית</span>
-    <div class="route rtl">הוסף עמודה → עמודה מותאמת אישית</div>
+    <div class="route rtl">הוסף עמודה ← מותאמת אישית</div>
   </div>
 </div>
       <p>דוגמה לתוצאה:</p>
@@ -873,7 +881,7 @@ ul{
   </div>
   <div class="platform-path">
     <span class="platform-label excel">Excel · עברית</span>
-    <div class="route rtl">שינוי צורה → עיצוב → אותיות רישיות</div>
+    <div class="route rtl">המר ← תבנית ← אותיות רישיות</div>
   </div>
 </div>
 
@@ -924,7 +932,7 @@ ul{
   </div>
   <div class="platform-path">
     <span class="platform-label excel">Excel · עברית</span>
-    <div class="route rtl">בית → סגור &amp; טען</div>
+    <div class="route rtl">בית ← סגור וטען</div>
   </div>
 </div>
   <p>שמרו את הקובץ בהתאם לסביבת העבודה: <b>PBIX</b> ב־Power BI או חוברת <b>Excel</b> אם עבדתם ב־Excel.</p>
